@@ -2,7 +2,7 @@ import pytest
 import allure
 import urls
 from helpers import login_user, get_json_response
-from data import error_messages, keys, invalid_email, invalid_password
+from data import ERROR_MESSAGES, KEYS, INVALID_EMAIL, INVALID_PASSWORD
 
 
 @allure.suite("Авторизация пользователя.")
@@ -10,7 +10,7 @@ class TestAuth:
 
     @allure.title("Успешная авторизация зарегистрированного пользователя.")
     @allure.description("Тест для проверки успешной авторизации зарегистрированного пользователя.")
-    @allure.link(urls.api_documentation, name="API документация")
+    @allure.link(urls.API_DOCUMENTATION, name="API документация")
 
     def test_login_with_registered_user_success(self, registered_user):
         with allure.step("Отправить запрос на авторизацию существующего пользователя"):
@@ -24,7 +24,7 @@ class TestAuth:
             )
 
         with allure.step("Проверить успешность запроса."):
-            assert response_json.get(keys['success_key']) is True, (
+            assert response_json.get(KEYS['success_key']) is True, (
                 f"Авторизация пользователя не удалась: {response_json}"
             )
 
@@ -35,13 +35,13 @@ class TestAuth:
 
     @allure.title("Получение ошибки при авторизации пользователя с неверными email и паролем.")
     @allure.description("Тест для проверки получения ошибки при авторизации пользователя с неверными обязательными даннами.")
-    @allure.link(urls.api_documentation, name="API документация")
+    @allure.link(urls.API_DOCUMENTATION, name="API документация")
 
     @pytest.mark.parametrize(
         "credentials_modifier, expected_message",
         [
-            (lambda ud: {"email": invalid_email, "password": ud["password"]}, error_messages['incorrect_credentials']),
-            (lambda ud: {"email": ud["email"], "password": invalid_password}, error_messages['incorrect_credentials']),
+            (lambda ud: {"email": INVALID_EMAIL, "password": ud["password"]}, ERROR_MESSAGES['incorrect_credentials']),
+            (lambda ud: {"email": ud["email"], "password": INVALID_PASSWORD}, ERROR_MESSAGES['incorrect_credentials']),
         ],
         ids=["invalid_email_correct_password", "correct_email_invalid_password"]
     )
@@ -55,5 +55,5 @@ class TestAuth:
             response_json = get_json_response(response)
 
         with allure.step("Проверить код и сообщение об ошибке"):
-            message = response_json.get(keys['message_key'])
+            message = response_json.get(KEYS['message_key'])
             assert (response.status_code, message) == (401, expected_message)

@@ -2,15 +2,15 @@ import pytest
 import requests
 import urls
 import helpers
-from data import password, name
+from data import PASSWORD, NAME
 
 
 @pytest.fixture
 def unique_user():
     return {
         "email": helpers.generate_random_email(),
-        "password": password,
-        "name": name
+        "password": PASSWORD,
+        "name": NAME
     }
 
 
@@ -41,8 +41,8 @@ def auth_headers(auth_token):
 def create_and_delete_user():
     user_data = {
         "email": helpers.generate_random_email(),
-        "password": password,
-        "name": name
+        "password": PASSWORD,
+        "name": NAME
     }
 
     response = helpers.register_user(user_data)
@@ -55,13 +55,13 @@ def create_and_delete_user():
 
     token = login_response.json()["accessToken"].split(" ")[1]
     headers = {"authorization": f"Bearer {token}"}
-    delete_response = requests.delete(urls.endpoints['delete_user'], headers=headers)
+    delete_response = requests.delete(urls.ENDPOINTS['delete_user'], headers=headers)
     assert delete_response.status_code in [200, 202]
 
 
 @pytest.fixture
 def ingredients():
-    response = requests.get(urls.endpoints['get_ingredients'])
+    response = requests.get(urls.ENDPOINTS['get_ingredients'])
     assert response.status_code == 200
     return response.json()['data']
 

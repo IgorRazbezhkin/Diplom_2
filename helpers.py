@@ -10,11 +10,11 @@ def generate_random_email(length=8):
     return f"user_{random_chars}@yandex.ru"
 
 def register_user(user_data):
-    response = requests.post(urls.endpoints['register'], json=user_data)
+    response = requests.post(urls.ENDPOINTS['register'], json=user_data)
     return response
 
 def login_user(user_data):
-    response = requests.post(urls.endpoints['login'], json=user_data)
+    response = requests.post(urls.ENDPOINTS['login'], json=user_data)
     return response
 
 def get_json_response(response):

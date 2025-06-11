@@ -1,12 +1,12 @@
-base_url = 'https://stellarburgers.nomoreparties.site/api'
-api_documentation = 'https://code.s3.yandex.net/qa-automation-engineer/python-full/diploma/api-documentation.pdf'
+BASE_URL = 'https://stellarburgers.nomoreparties.site/api'
+API_DOCUMENTATION = 'https://code.s3.yandex.net/qa-automation-engineer/python-full/diploma/api-documentation.pdf'
 
-endpoints = {
-    'register': f'{base_url}/auth/register',
-    'login': f'{base_url}/auth/login',
-    'update_user': f'{base_url}/auth/user',
-    'delete_user': f'{base_url}/auth/user',
-    'get_ingredients': f'{base_url}/ingredients',
-    'create_order': f'{base_url}/orders',
-    'get_user_orders': f'{base_url}/orders',
+ENDPOINTS = {
+    'register': f'{BASE_URL}/auth/register',
+    'login': f'{BASE_URL}/auth/login',
+    'update_user': f'{BASE_URL}/auth/user',
+    'delete_user': f'{BASE_URL}/auth/user',
+    'get_ingredients': f'{BASE_URL}/ingredients',
+    'create_order': f'{BASE_URL}/orders',
+    'get_user_orders': f'{BASE_URL}/orders',
 }

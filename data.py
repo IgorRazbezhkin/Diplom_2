@@ -1,13 +1,13 @@
-password = 'Testpassword123'
-name = 'Testname'
+PASSWORD = 'Testpassword123'
+NAME = 'Testname'
 
-invalid_email = 'invalidemail@example.com'
-invalid_password = 'invalidpassword456'
+INVALID_EMAIL = 'invalidemail@example.com'
+INVALID_PASSWORD = 'invalidpassword456'
 
-updated_password = 'updatedpassword123'
-updated_name = 'updatedname'
+UPDATED_PASSWORD = 'updatedpassword123'
+UPDATED_NAME = 'updatedname'
 
-error_messages = {
+ERROR_MESSAGES = {
     'user_exists': "User already exists",
     'missing_fields': "Email, password and name are required fields",
     'incorrect_credentials': "email or password are incorrect",
@@ -15,7 +15,7 @@ error_messages = {
     'no_ingredients_provided': "Ingredient ids must be provided",
 }
 
-keys = {
+KEYS = {
     'success_key': 'success',
     'user_key': 'user',
     'name_key': 'name',

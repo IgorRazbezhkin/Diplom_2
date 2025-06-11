@@ -2,7 +2,7 @@ import pytest
 import allure
 import urls
 from helpers import register_user, get_json_response
-from data import keys, error_messages
+from data import ERROR_MESSAGES, KEYS
 
 
 @allure.suite("Создание пользователя")
@@ -10,7 +10,7 @@ class TestUserCreation:
 
     @allure.title("Успешное создание уникального пользователя.")
     @allure.description("Тест для проверки успешного создание нового уникального пользователя.")
-    @allure.link(urls.api_documentation, name="API документация")
+    @allure.link(urls.API_DOCUMENTATION, name="API документация")
 
     def test_create_unique_user_success(self, unique_user):
         with allure.step("Отправить запрос на регистрацию пользователя"):
@@ -23,12 +23,12 @@ class TestUserCreation:
             )
 
         with allure.step("Проверить успешность запроса."):
-            assert response_json.get(keys['success_key']) is True, (
+            assert response_json.get(KEYS['success_key']) is True, (
                 f"Создание пользователя не удалось: {response_json}"
             )
 
         with allure.step("Проверить наличие ключа 'user' в ответе"):
-            user_info = response_json.get(keys['user_key'])
+            user_info = response_json.get(KEYS['user_key'])
             assert user_info is not None, "В ответе отсутствует ключ 'user'"
 
         with allure.step("Проверить структуру данных внутри 'user'"):
@@ -50,7 +50,7 @@ class TestUserCreation:
 
     @allure.title("Получение ошибки при создании пользователя с существующим email.")
     @allure.description("Тест для проверки получения ошибки при создании пользователя с существующим email.")
-    @allure.link(urls.api_documentation, name="API документация")
+    @allure.link(urls.API_DOCUMENTATION, name="API документация")
 
     def test_create_user_with_existing_email_error_received(self, registered_user):
         with allure.step("Зарегистрировать пользователя с уже существующим email"):
@@ -58,15 +58,15 @@ class TestUserCreation:
             response_json = get_json_response(response)
 
         with allure.step("Проверить код и сообщение об ошибке"):
-            message = response_json.get(keys['message_key'])
-            assert (response.status_code, message) == (403, error_messages['user_exists']), (
-                f"Ожидался статус 403 и сообщение '{error_messages['user_exists']}', "
+            message = response_json.get(KEYS['message_key'])
+            assert (response.status_code, message) == (403, ERROR_MESSAGES['user_exists']), (
+                f"Ожидался статус 403 и сообщение '{ERROR_MESSAGES['user_exists']}', "
                 f"Получен статус {response.status_code} и сообщение '{message}'. Тело: {response.text}"
             )
 
     @allure.title("Получение ошибки при создании пользователя с отсутствующими обязательными данными.")
     @allure.description("Тест для проверки получения ошибки при создании пользователя с отсутствующими обязательными данными.")
-    @allure.link(urls.api_documentation, name="API документация")
+    @allure.link(urls.API_DOCUMENTATION, name="API документация")
 
     @pytest.mark.parametrize("missing_field", ["email", "password", "name"])
 
@@ -80,8 +80,8 @@ class TestUserCreation:
             response_json = get_json_response(response)
 
         with allure.step("Проверить код и сообщение об ошибке"):
-            message = response_json.get(keys['message_key'])
-            assert (response.status_code, message) == (403, error_messages['missing_fields']), (
-                f"Ожидался статус 403 и сообщение '{error_messages['missing_fields']}', "
+            message = response_json.get(KEYS['message_key'])
+            assert (response.status_code, message) == (403, ERROR_MESSAGES['missing_fields']), (
+                f"Ожидался статус 403 и сообщение '{ERROR_MESSAGES['missing_fields']}', "
                 f"Получен статус {response.status_code} и сообщение '{message}'. Тело: {response.text}"
             )
